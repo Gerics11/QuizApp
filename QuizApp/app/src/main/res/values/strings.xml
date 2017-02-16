@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">QuizApp</string>
+    <string name="intro">Test your knowledge in geography! How many questions can you answer?</string>
+    <string name="start">Start Quiz</string>
+    <string name="try_again">Try again</string>
+    <string name="next">Next</string>
+    <string name="website">go to Triviaplaza.com</string>
+    <string name="score">Score</string>
+</resources>
