@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         scoreView.setText(getString(R.string.score) + ": " + score + "/10");
         buttonColorReset();
         if (currentQuestion == 0) {
-            display("1. What is the capitol of Hungary?", "Budapest", "Bucharest", "Zagreb", "Wien", 1);
+            display("1. What is the capital city of Hungary?", "Budapest", "Bucharest", "Zagreb", "Wien", 1);
         } else if (currentQuestion == 1) {
             display("2. What is Earth's third largest continent by land surface size?", "Europe", "North America", "Africa", "South America", 2);
         } else if (currentQuestion == 2) {
