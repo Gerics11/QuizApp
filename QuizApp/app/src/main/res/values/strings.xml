@@ -6,4 +6,9 @@
     <string name="next">Next</string>
     <string name="website">go to Triviaplaza.com</string>
     <string name="score">Score</string>
+    <string name="imgDesc">background image</string>
+    <string name="continueQuiz">Continue Quiz</string>
+    <string name="endScreen1">Final Score: </string>
+    <string name="endScreen2">Questions provided by Triviaplaza.com</string>
+    <string name="endScreen3">Visit their website for more quizzes in more topics!</string>
 </resources>

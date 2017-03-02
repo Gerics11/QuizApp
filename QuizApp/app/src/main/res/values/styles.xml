@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#585858</item>
         <item name="colorPrimaryDark">#2E2E2E</item>
@@ -12,5 +12,25 @@
         <item name="android:scaleType">centerCrop</item>
         <item name="android:src">@drawable/map1</item>
     </style>
+    <style name="separatorView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_marginLeft">36dp</item>
+        <item name="android:layout_marginRight">36dp</item>
+        <item name="android:background">#A4A4A4</item>
+    </style>
+    <style name="buttonStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="startButton">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_margin">24dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
 
 </resources>

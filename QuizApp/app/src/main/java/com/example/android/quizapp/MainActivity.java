@@ -9,11 +9,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String QUESTIONNUMBER = "CURRENTQUESTION";
     private static final String SCORESAVED = "SCORE";
+    List<String> questionList = new ArrayList<String>();
     int currentQuestion = 0;
     int score = 0;
     int rightAnswer = 1;
@@ -22,20 +32,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        try {
+            readQuestions();
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Problems: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         Button continueTest = (Button) findViewById(R.id.start_button);
         buttonEnable(false);
         if (savedInstanceState != null) {
             score = savedInstanceState.getInt(SCORESAVED);
             currentQuestion = savedInstanceState.getInt(QUESTIONNUMBER);
-            if (currentQuestion == 0) {
-            } else if (currentQuestion < 10 && currentQuestion > 0) {
-                continueTest.setText("Continue Quiz");
+            if (currentQuestion < 10 && currentQuestion > 0) {   //TODO skip the countinue button thingy
+                continueTest.setText(getString(R.string.continueQuiz));
             } else {
-                showEndScreen(true);
+                showEndScreen();
             }
         }
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -70,8 +84,35 @@ public class MainActivity extends AppCompatActivity {
         answer2.setText(answer02);
         answer3.setText(answer03);
         answer4.setText(answer04);
-        showEndScreen(false);
         rightAnswer = solution;
+        buttonStatus(2);
+    }
+
+    /**
+     * Reads the questions from questions.txt and writes the values into the arraylist
+     *
+     * @throws IOException
+     */
+    private void readQuestions() throws IOException {
+        String str;
+        //InputStream is = getAssets().open("en_questions.txt");
+        InputStream is = getAssets().open("en_questions.txt");
+        if (Locale.getDefault().getLanguage().equals("hu")){
+            is = getAssets().open("hu_questions.txt");
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            if (is != null) {
+                while ((str = reader.readLine()) != null) {
+                    questionList.add(str);
+                }
+            }
+        } finally {
+            try {
+                is.close();
+            } catch (Throwable ignore) {
+            }
+        }
     }
 
     /**
@@ -84,39 +125,16 @@ public class MainActivity extends AppCompatActivity {
         TextView scoreView = (TextView) findViewById(R.id.score_textview);
         scoreView.setText(getString(R.string.score) + ": " + score + "/10");
         buttonColorReset();
-        if (currentQuestion == 0) {
-            display("1. What is the capital city of Hungary?", "Budapest", "Bucharest", "Zagreb", "Wien", 1);
-        } else if (currentQuestion == 1) {
-            display("2. What is Earth's third largest continent by land surface size?", "Europe", "North America", "Africa", "South America", 2);
-        } else if (currentQuestion == 2) {
-            display("3. In which country is Mount Everest?", "Mongolia", "Hongkong", "India", "Nepal", 4);
-        } else if (currentQuestion == 3) {
-            display("4. How many states are in the U.S.A.?", "49", "50", "51", "52", 2);
-        } else if (currentQuestion == 4) {
-            display("5. Which country has the largest population in Africa?", "South Africa", "Nigeria", "Ethiopia", "Egypt", 2);
-        } else if (currentQuestion == 5) {
-            display("6. What is by surface area, the largest island in the Mediterranean Sea?", "Cyprus", "Corsica", "Sicily", "Sardinia", 3);
-        } else if (currentQuestion == 6) {
-            display("7. What is the longest river in Europe?", "Ural", "Volga", "Dnieper", "Danube", 2);
-        } else if (currentQuestion == 7) {
-            display("8. What is the world's largest landlocked country (has no border on an ocean)?", "Mongolia", "Chad", "Afghanistan", "Kazakhstan", 4);
-        } else if (currentQuestion == 8) {
-            display("9. Where is Bhutan located?", "Oceania", "South America", "Asia", "Africa", 3);
-        } else if (currentQuestion == 9) {
-            display("10. Which country's flag contains any other color than red, blue and white?", "Norway", "Russia", "Netherlands", "Belgium", 4);
-        } else if (currentQuestion >= 10) {
-            TextView questionTextView = (TextView) findViewById(R.id.question);
-            questionTextView.setText("Final Score: " + score + "/10" +
-                    "\nQuestions provided by Triviaplaza.com" +
-                    "\nVisit their website for more quizzes in more topics!");
-            Button nextButton = (Button) findViewById(R.id.next_button);
-            nextButton.setVisibility(View.GONE);
-            scoreView.setVisibility(View.GONE);
-            Button tryAgain = (Button) findViewById(R.id.try_again_button);
-            Button linkButton = (Button) findViewById(R.id.link_button);
-            tryAgain.setVisibility(View.VISIBLE);
-            linkButton.setVisibility(View.VISIBLE);
-            buttonEnable(false);
+        if (currentQuestion < 10) {             //TODO flexible numbering
+            display(questionList.get(currentQuestion * 6),
+                    questionList.get(currentQuestion * 6 + 1),
+                    questionList.get(currentQuestion * 6 + 2),
+                    questionList.get(currentQuestion * 6 + 3),
+                    questionList.get(currentQuestion * 6 + 4),
+                    Integer.valueOf(questionList.get(currentQuestion * 6 + 5)));
+        }
+        if (currentQuestion >= 10) {
+            showEndScreen();
         }
     }
 
@@ -124,28 +142,15 @@ public class MainActivity extends AppCompatActivity {
      * This method is called by display method and onSaveState to show the correct views
      * after starting quiz or switching orientation.
      *
-     * @param whichscreen true displays the end screen, false displays the current question.
      */
-    private void showEndScreen(boolean whichscreen) {
+    private void showEndScreen() {
         TextView questionTextView = (TextView) findViewById(R.id.question);
-        LinearLayout quizIntro = (LinearLayout) findViewById(R.id.quizIntro);
-        Button newGame = (Button) findViewById(R.id.start_button);
-        if (whichscreen) {
-            questionTextView.setVisibility(View.VISIBLE);
-            quizIntro.setVisibility(View.GONE);
-            newGame.setVisibility(View.GONE);
-            questionTextView.setText("Final Score: " + score + "/10" +
-                    "\nQuestions provided by Triviaplaza.com" +
-                    "\nVisit their website for more quizzes in more topics!");
-            Button linkButton = (Button) findViewById(R.id.link_button);
-            Button retryButton = (Button) findViewById(R.id.try_again_button);
-            linkButton.setVisibility(View.VISIBLE);
-            retryButton.setVisibility(View.VISIBLE);
-        } else {
-            quizIntro.setVisibility(View.GONE);
-//            newGame.setVisibility(View.GONE);
-            questionTextView.setVisibility(View.VISIBLE);
-        }
+        questionTextView.setText(getString(R.string.endScreen1) + score + "/10" +
+                "\n" + getString(R.string.endScreen2) +
+                "\n" + getString(R.string.endScreen3));
+        buttonStatus(3);
+        buttonColorReset();
+        buttonEnable(false);
     }
 
     /**
@@ -270,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
             answer2.setEnabled(true);
             answer3.setEnabled(true);
             answer4.setEnabled(true);
+
         } else {
             answer1.setEnabled(false);
             answer2.setEnabled(false);
@@ -296,21 +302,66 @@ public class MainActivity extends AppCompatActivity {
      * @param view called by R.id.try_again_button.
      */
     public void tryAgain(View view) {
-        Button tryAgain = (Button) findViewById(R.id.try_again_button);
-        Button linkButton = (Button) findViewById(R.id.link_button);
-        tryAgain.setVisibility(View.GONE);
-        linkButton.setVisibility(View.GONE);
         score = 0;
         rightAnswer = 1;
         currentQuestion = 0;
         Button newGame = (Button) findViewById(R.id.start_button);
-        TextView questionTextView = (TextView) findViewById(R.id.question);
-        LinearLayout quizIntro = (LinearLayout) findViewById(R.id.quizIntro);
-        newGame.setText("New Game");
-        newGame.setVisibility(View.VISIBLE);
-        questionTextView.setVisibility(View.GONE);
-        quizIntro.setVisibility(View.VISIBLE);
+        newGame.setText(getString(R.string.start));
+        buttonStatus(1);
     }
 
+    private void buttonStatus(int state) {
+        Button tryAgain = (Button) findViewById(R.id.try_again_button);
+        Button linkButton = (Button) findViewById(R.id.link_button);
+        TextView questionTextView = (TextView) findViewById(R.id.question);
+        LinearLayout quizIntro = (LinearLayout) findViewById(R.id.quizIntro);
+        Button nextButton = (Button) findViewById(R.id.next_button);
+        TextView scoreView = (TextView) findViewById(R.id.score_textview);
+        if (state == 1) {
+            tryAgain.setVisibility(View.GONE);
+            linkButton.setVisibility(View.GONE);
+            questionTextView.setVisibility(View.GONE);
+            quizIntro.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.GONE);
+            scoreView.setVisibility(View.GONE);
+        } else if (state == 2) {
+            tryAgain.setVisibility(View.GONE);
+            linkButton.setVisibility(View.GONE);
+            questionTextView.setVisibility(View.VISIBLE);
+            quizIntro.setVisibility(View.GONE);
+            nextButton.setVisibility(View.VISIBLE);
+            scoreView.setVisibility(View.VISIBLE);
+        } else if (state == 3) {
+            tryAgain.setVisibility(View.VISIBLE);
+            linkButton.setVisibility(View.VISIBLE);
+            questionTextView.setVisibility(View.VISIBLE);
+            quizIntro.setVisibility(View.GONE);
+            nextButton.setVisibility(View.GONE);
+            scoreView.setVisibility(View.GONE);
+        }
 
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

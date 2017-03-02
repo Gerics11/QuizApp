@@ -9,7 +9,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/appBackground"/>
+        style="@style/appBackground"
+        android:contentDescription="@string/imgDesc"/>
 
     <LinearLayout
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -26,7 +27,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="4"
-            android:background="#00000000"
+            android:background="@color/transparent"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -46,28 +47,21 @@
                 android:gravity="center"
                 android:text="@string/intro"
                 android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                style="@style/startButton"/>
 
             <Button
                 android:id="@+id/start_button"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
                 android:onClick="setQuestion"
                 android:text="@string/start"
-                android:textSize="28sp"
                 android:visibility="visible"
-                android:layout_margin="24dp"
-                android:maxHeight="30dp"/>
+                style="@style/startButton"                />
+
         </LinearLayout>
 
         <View
             android:id="@+id/black_line_view1"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:background="#A4A4A4" />
+            style="@style/separatorView" />
 
         <LinearLayout
             android:id="@+id/buttons_layout"
@@ -76,8 +70,9 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
             android:layout_weight="2"
-            android:background="#00000000"
-            android:orientation="horizontal">
+            android:background="@color/transparent"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -87,23 +82,17 @@
 
                 <Button
                     android:id="@+id/answer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    style="@style/buttonStyle"
                     android:layout_weight="1"
                     android:onClick="button1"
-                    android:text="A"
-                    android:textSize="16sp"/>
+                    android:text="A"/>
 
                 <Button
                     android:id="@+id/answer3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    style="@style/buttonStyle"
                     android:layout_weight="1"
                     android:onClick="button3"
-                    android:text="C"
-                    android:textSize="16sp"/>
+                    android:text="C"/>
             </LinearLayout>
 
             <LinearLayout
@@ -114,39 +103,29 @@
 
                 <Button
                     android:id="@+id/answer2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    style="@style/buttonStyle"
                     android:layout_weight="1"
                     android:onClick="button2"
-                    android:text="B"
-                    android:textSize="16sp"/>
+                    android:text="B"/>
 
                 <Button
                     android:id="@+id/answer4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    style="@style/buttonStyle"
                     android:layout_weight="1"
                     android:onClick="button4"
-                    android:text="D"
-                    android:textSize="16sp" />
+                    android:text="D"/>
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:id="@+id/black_line_view2"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:background="#A4A4A4" />
+            style="@style/separatorView" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="#00000000"
+            android:background="@color/transparent"
             android:orientation="horizontal">
 
             <TextView
@@ -166,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="tryAgain"
-                android:text="Try Again"
+                android:text="@string/try_again"
                 android:visibility="gone" />
 
             <Button
@@ -175,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="setQuestion"
-                android:text="Next"
+                android:text="@string/next"
                 android:visibility="gone" />
 
             <Button

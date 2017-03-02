@@ -40,25 +40,19 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/intro"
                 android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                style="@style/startButton"/>
 
             <Button
                 android:id="@+id/start_button"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingRight="24dp"
-                android:paddingLeft="24dp"
                 android:onClick="setQuestion"
                 android:text="@string/start"
-                android:textSize="28sp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                style="@style/startButton"/>
         </LinearLayout>
 
         <View
@@ -75,7 +69,8 @@
             android:layout_height="0dp"
             android:layout_weight="2"
             android:background="#00000000"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -85,23 +80,17 @@
 
                 <Button
                     android:id="@+id/answer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:onClick="button1"
                     android:text="A"
-                    android:textSize="16sp" />
+                    style="@style/buttonStyle"                     />
 
                 <Button
                     android:id="@+id/answer3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:onClick="button3"
                     android:text="C"
-                    android:textSize="16sp" />
+                    style="@style/buttonStyle"/>
             </LinearLayout>
 
             <LinearLayout
@@ -112,23 +101,17 @@
 
                 <Button
                     android:id="@+id/answer2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:onClick="button2"
                     android:text="B"
-                    android:textSize="16sp" />
+                    style="@style/buttonStyle"/>
 
                 <Button
                     android:id="@+id/answer4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:onClick="button4"
                     android:text="D"
-                    android:textSize="16sp" />
+                    style="@style/buttonStyle"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -165,7 +148,7 @@
                 android:layout_marginRight="18dp"
                 android:layout_weight="1"
                 android:onClick="tryAgain"
-                android:text="Try Again"
+                android:text="@string/try_again"
                 android:visibility="gone" />
 
             <Button
@@ -174,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="setQuestion"
-                android:text="Next"
+                android:text="@string/next"
                 android:visibility="invisible" />
 
             <Button

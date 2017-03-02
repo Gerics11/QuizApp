@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuizApp</string>
+    <string name="imgDesc">háttér kép</string>
+    <string name="intro">Teszteld tudásod földrajzból! Hány kérdésre tudsz válaszolni?</string>
+    <string name="next">Tovább</string>
+    <string name="score">Pontok</string>
+    <string name="start">Kvíz indítása</string>
+    <string name="try_again">Próbáld újra</string>
+    <string name="website">Triviaplaza.com oldala</string>
+    <string name="continueQuiz">Kvíz folytatása</string>
+    <string name="endScreen1">"Végeredmény: "</string>
+    <string name="endScreen2">Kérdések a Triviaplaza.com-ról</string>
+    <string name="endScreen3">Látogasd meg a honlapukat még több kérdésért még több témában!</string>
+</resources>
