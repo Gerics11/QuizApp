@@ -12,4 +12,5 @@
     <string name="endScreen1">"Végeredmény: "</string>
     <string name="endScreen2">Kérdések a Triviaplaza.com-ról</string>
     <string name="endScreen3">Látogasd meg a honlapukat még több kérdésért még több témában!</string>
+    <string name="toastMessage">Előbb válaszolj a kérdésre!</string>
 </resources>

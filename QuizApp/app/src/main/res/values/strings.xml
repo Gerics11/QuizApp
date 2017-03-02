@@ -11,4 +11,5 @@
     <string name="endScreen1">Final Score: </string>
     <string name="endScreen2">Questions provided by Triviaplaza.com</string>
     <string name="endScreen3">Visit their website for more quizzes in more topics!</string>
+    <string name="toastMessage">Pick an answer first!</string>
 </resources>

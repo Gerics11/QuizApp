@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     int currentQuestion = 0;
     int score = 0;
     int rightAnswer = 1;
+    int numberOfQuestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         try {
             readQuestions();
+            numberOfQuestions = questionList.size() / 6;
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Problems: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -42,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             score = savedInstanceState.getInt(SCORESAVED);
             currentQuestion = savedInstanceState.getInt(QUESTIONNUMBER);
-            if (currentQuestion < 10 && currentQuestion > 0) {   //TODO skip the countinue button thingy
+            if (currentQuestion < numberOfQuestions && currentQuestion > 0) {   //TODO skip the countinue button thingy
                 continueTest.setText(getString(R.string.continueQuiz));
-            } else {
+            } else if ( currentQuestion >= numberOfQuestions ){
                 showEndScreen();
             }
         }
@@ -121,11 +123,16 @@ public class MainActivity extends AppCompatActivity {
      * @param view displays score and show try_again_button and link_button buttons.
      */
     public void setQuestion(View view) {
+        Button answerButton = (Button) findViewById(R.id.answer1);
+        if (answerButton.isEnabled()) {
+            Toast.makeText(this, getString(R.string.toastMessage),
+                    Toast.LENGTH_SHORT).show();
+        }
         buttonEnable(true);
         TextView scoreView = (TextView) findViewById(R.id.score_textview);
-        scoreView.setText(getString(R.string.score) + ": " + score + "/10");
+        scoreView.setText(getString(R.string.score) + ": " + score + "/" + numberOfQuestions);
         buttonColorReset();
-        if (currentQuestion < 10) {             //TODO flexible numbering
+        if (currentQuestion < numberOfQuestions) {
             display(questionList.get(currentQuestion * 6),
                     questionList.get(currentQuestion * 6 + 1),
                     questionList.get(currentQuestion * 6 + 2),
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     questionList.get(currentQuestion * 6 + 4),
                     Integer.valueOf(questionList.get(currentQuestion * 6 + 5)));
         }
-        if (currentQuestion >= 10) {
+        if (currentQuestion >= numberOfQuestions) {
             showEndScreen();
         }
     }
@@ -145,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showEndScreen() {
         TextView questionTextView = (TextView) findViewById(R.id.question);
-        questionTextView.setText(getString(R.string.endScreen1) + score + "/10" +
+        questionTextView.setText(getString(R.string.endScreen1) + score + "/" + numberOfQuestions +
                 "\n" + getString(R.string.endScreen2) +
                 "\n" + getString(R.string.endScreen3));
         buttonStatus(3);
@@ -275,6 +282,10 @@ public class MainActivity extends AppCompatActivity {
             answer2.setEnabled(true);
             answer3.setEnabled(true);
             answer4.setEnabled(true);
+            answer1.setTextColor(Color.parseColor("#000000"));
+            answer2.setTextColor(Color.parseColor("#000000"));
+            answer3.setTextColor(Color.parseColor("#000000"));
+            answer4.setTextColor(Color.parseColor("#000000"));
 
         } else {
             answer1.setEnabled(false);
