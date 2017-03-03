@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             score = savedInstanceState.getInt(SCORESAVED);
             currentQuestion = savedInstanceState.getInt(QUESTIONNUMBER);
-            if (currentQuestion < numberOfQuestions && currentQuestion > 0) {   //TODO skip the countinue button thingy
+            if (currentQuestion < numberOfQuestions && currentQuestion > 0) {
                 continueTest.setText(getString(R.string.continueQuiz));
             } else if ( currentQuestion >= numberOfQuestions ){
                 showEndScreen();
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void readQuestions() throws IOException {
         String str;
-        //InputStream is = getAssets().open("en_questions.txt");
         InputStream is = getAssets().open("en_questions.txt");
         if (Locale.getDefault().getLanguage().equals("hu")){
             is = getAssets().open("hu_questions.txt");
@@ -120,11 +119,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Gives input to the display method, displays current score and displays summary after last questions.
      *
-     * @param view displays score and show try_again_button and link_button buttons.
+     * @param view method is called by start and next buttons
      */
     public void setQuestion(View view) {
         Button answerButton = (Button) findViewById(R.id.answer1);
-        if (answerButton.isEnabled()) {
+        if (answerButton.isEnabled()) {             //if answer button is active, we are waiting for an answer
             Toast.makeText(this, getString(R.string.toastMessage),
                     Toast.LENGTH_SHORT).show();
         }
@@ -234,20 +233,20 @@ public class MainActivity extends AppCompatActivity {
      */
     public void showCorrectAnswer() {
         currentQuestion = currentQuestion + 1;
-        Button answer1 = (Button) findViewById(R.id.answer1);
-        Button answer2 = (Button) findViewById(R.id.answer2);
-        Button answer3 = (Button) findViewById(R.id.answer3);
-        Button answer4 = (Button) findViewById(R.id.answer4);
         if (rightAnswer == 1) {
+            Button answer1 = (Button) findViewById(R.id.answer1);
             answer1.setBackgroundColor(Color.parseColor("#01DF01"));
         }
         if (rightAnswer == 2) {
+            Button answer2 = (Button) findViewById(R.id.answer2);
             answer2.setBackgroundColor(Color.parseColor("#01DF01"));
         }
         if (rightAnswer == 3) {
+            Button answer3 = (Button) findViewById(R.id.answer3);
             answer3.setBackgroundColor(Color.parseColor("#01DF01"));
         }
         if (rightAnswer == 4) {
+            Button answer4 = (Button) findViewById(R.id.answer4);
             answer4.setBackgroundColor(Color.parseColor("#01DF01"));
         }
     }
@@ -282,6 +281,7 @@ public class MainActivity extends AppCompatActivity {
             answer2.setEnabled(true);
             answer3.setEnabled(true);
             answer4.setEnabled(true);
+            // answer button text set to black, because some devices fade out button text when disabled
             answer1.setTextColor(Color.parseColor("#000000"));
             answer2.setTextColor(Color.parseColor("#000000"));
             answer3.setTextColor(Color.parseColor("#000000"));
